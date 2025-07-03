@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>User Test History</title>
+  <style>
+    body { font-family: Arial; padding: 20px; background: #fff8f0; }
+    h2 { color: #333366; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { padding: 10px; border: 1px solid #ccc; text-align: center; }
+    button { padding: 6px 12px; background-color: #28a745; color: white; border: none; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h2>User Test Sessions</h2>
+  <table id="sessionsTable">
+    <thead>
+      <tr><th>Session ID</th><th>Date</th><th>Score</th><th>Total Time (sec)</th><th>Action</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const userId = params.get("user_id");
+
+    fetch(`http://127.0.0.1:5000/admin/user_tests/${userId}`)
+      .then(res => res.json())
+      .then(sessions => {
+        const tbody = document.querySelector("#sessionsTable tbody");
+        sessions.forEach(session => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${session.session_id}</td>
+            <td>${new Date(session.started_at).toLocaleString()}</td>
+            <td>${session.total_score ?? 0}</td>
+            <td>${Math.round(session.total_time ?? 0)}</td>
+            <td><button onclick="viewSession(${session.session_id})">View Details</button></td>
+          `;
+          tbody.appendChild(row);
+        });
+      });
+
+    function viewSession(sessionId) {
+      window.location.href = `test_details.html?session_id=${sessionId}`;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Dashboard - All Users</title>
+  <style>
+    body { font-family: Arial; padding: 20px; background-color: #f5f5f5; }
+    h2 { color: #004080; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { padding: 10px; border: 1px solid #ccc; }
+    tr:hover { background-color: #eef; }
+    button { padding: 6px 12px; background-color: #007BFF; color: white; border: none; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h2>All Registered Users</h2>
+  <table id="usersTable">
+    <thead>
+      <tr><th>Name</th><th>Email</th><th>Registered On</th><th>Action</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    fetch('http://127.0.0.1:5000/admin/users')
+      .then(res => res.json())
+      .then(users => {
+        const tbody = document.querySelector("#usersTable tbody");
+        users.forEach(user => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${user.name}</td>
+            <td>${user.email}</td>
+            <td>${new Date(user.created_at).toLocaleString()}</td>
+            <td><button onclick="viewUser(${user.id})">View Tests</button></td>
+          `;
+          tbody.appendChild(row);
+        });
+      });
+
+    function viewUser(userId) {
+      window.location.href = `user_tests.html?user_id=${userId}`;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* General Layout */
+body {
+  background: #f2f8fb;
+  color: #222;
+  padding: 20px;
+}
+
+/* Card Layout */
+.card {
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  padding: 25px;
+  margin: 20px auto;
+  max-width: 400px;
+}
+
+/* Buttons */
+button {
+  background: linear-gradient(to right, #00c6ff, #0072ff);
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s ease;
+}
+
+button:hover {
+  background: linear-gradient(to right, #0072ff, #00c6ff);
+}
+
+/* Input Fields */
+input, select {
+  width: 100%;
+  padding: 12px;
+  margin: 12px 0;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  font-size: 1em;
+}
+
+/* Profile & Form Titles */
+h1, h2 {
+  color: #0072ff;
+  margin-bottom: 15px;
+}
+
+/* Navigation or Header */
+header {
+  text-align: center;
+  padding: 10px;
+  background: #00c6ff;
+  color: white;
+  font-size: 1.2em;
+  border-radius: 0 0 20px 20px;
+}
+
+/* Profile Box */
+.profile {
+  background: #e6f7ff;
+  border-radius: 15px;
+  padding: 15px;
+  margin-top: 15px;
+}
+
+/* Question Box */
+#question-box {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 114, 255, 0.1);
+}
+
+/* Calendar-like Placeholder */
+.calendar-box {
+  background: #f0fbff;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  margin-top: 20px;
+}

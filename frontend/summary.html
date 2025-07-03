@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MMSE Score Summary</title>
+  <style>
+    body {
+      font-family: Arial;
+      background-color: #f5faff;
+      text-align: center;
+      padding-top: 50px;
+    }
+    h1 {
+      color: #0077cc;
+    }
+    #score-box {
+      font-size: 1.8rem;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+    #home{
+      margin-top: 10vh;
+      height:4.5vh;
+      width:15vh;
+      background-color: #49a1df;
+      color:#f5faff;
+      border: 0cap;
+      box-shadow: #007;
+      border-radius: 1.4vh;
+    }
+  </style>
+</head>
+<body>
+  <h1>MMSE Test Result</h1>
+  <div id="score-box">Loading score...</div>
+  <button id="home">Go to Home </button>
+
+  <script>
+    const BASE_URL = 'http://127.0.0.1:5000';
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user) window.location.href = "login.html";
+    
+
+    fetch(`${BASE_URL}/total_score/${user.id}`)
+      .then(res => res.json())
+      .then(data => {
+        const score = data.user_score || 0;
+        const total = data.total_score || 30;
+        document.getElementById("score-box").textContent =
+          `You scored ${score} out of ${total}`;
+      })
+      
+     
+      .catch(err => {
+        document.getElementById("score-box").textContent = "Unable to load score.";
+        console.error(err);
+      });
+
+      // const btn = document.getElementById("home");
+      // btn.onclick(window.location.href = "profile.html");
+  </script>
+</body>
+</html>

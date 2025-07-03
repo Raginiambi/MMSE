@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test Details</title>
+  <style>
+    body { font-family: Arial; padding: 20px; background: #f0faff; }
+    h2 { color: #006699; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { padding: 10px; border: 1px solid #ccc; }
+    tr:nth-child(even) { background-color: #e6f7ff; }
+  </style>
+</head>
+<body>
+  <h2>Test Details</h2>
+  <table id="detailsTable">
+    <thead>
+      <tr>
+        <th>Question</th>
+        <th>Answer</th>
+        <th>Time Taken (sec)</th>
+        <th>Score</th>
+        <th>Submitted At</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const sessionId = params.get("session_id");
+
+    fetch(`http://127.0.0.1:5000/admin/test_details/${sessionId}`)
+      .then(res => res.json())
+      .then(details => {
+        const tbody = document.querySelector("#detailsTable tbody");
+        details.forEach(entry => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${entry.question_text}</td>
+            <td>${entry.answer}</td>
+            <td>${Math.round(entry.time_taken_seconds ?? 0)}</td>
+            <td>${entry.score_awarded}</td>
+            <td>${new Date(entry.submitted_at).toLocaleString()}</td>
+          `;
+          tbody.appendChild(row);
+        });
+      });
+  </script>
+</body>
+</html>

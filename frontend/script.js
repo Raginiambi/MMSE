@@ -75,31 +75,28 @@ function loadMMSETest() {
     .then(data => {
       mmseQuestions = data;
       currentIndex = 0;
-      showQuestion();
+      showQuestion(); // will now use renderQuestion
     });
 }
 
 function showQuestion() {
   if (currentIndex >= mmseQuestions.length) {
     alert("Test completed!");
-    window.location.href = "summary.html"; // redirect to summary
+    window.location.href = "summary.html";
     return;
   }
-
 
   const question = mmseQuestions[currentIndex];
   startTime = Date.now();
 
-  document.getElementById("question-box").innerHTML = `
-    <p><strong>Q${currentIndex + 1}:</strong> ${question.question_text}</p>
-    <input id="answer" placeholder="Your answer here"><br>
-    <button onclick="submitAnswer(${question.id})">Submit</button>
-  `;
+  // Call the dynamic renderer
+  renderQuestion(question);
 }
 
-function submitAnswer(questionId) {
-  const answer = document.getElementById("answer").value;
+function submitAnswer() {
+  const answer = document.getElementById("answerInput").value;
   const user = JSON.parse(localStorage.getItem("user"));
+  const questionId = mmseQuestions[currentIndex].id;
   const timeTaken = ((Date.now() - startTime) / 1000).toFixed(2);
 
   fetch(`${BASE_URL}/submit_answer`, {
@@ -109,14 +106,15 @@ function submitAnswer(questionId) {
       user_id: user.id,
       question_id: questionId,
       answer: answer,
-      time_taken: timeTaken,
-      score: 0 // default score
+      time_taken: timeTaken
     })
-  }).then(() => {
-    currentIndex++;
-    showQuestion();
-  });
+  }).then(res => res.json())
+    .then(() => {
+      currentIndex++;
+      showQuestion();
+    });
 }
+
 
 function loadScoreHistory() {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -146,3 +144,83 @@ function loadScoreHistory() {
     });
 }
 
+
+function renderQuestion(question) {
+  const container = document.getElementById('question-area');
+  container.innerHTML = `<h3><strong>Q${question.id}:</strong> ${question.question_text}</h3>`;
+
+  // Clear previous answer input
+  let inputHTML = '';
+
+  // Handle types
+  switch (question.answer_type) {
+    case 'calendar':
+      inputHTML = `<input type="date" id="answerInput" class="answer-box">`;
+      break;
+
+    case 'image_choice':
+      inputHTML = `<div id="image-options">`;
+      question.options.forEach((imgSrc, idx) => {
+        inputHTML += `
+          <img src="images/${imgSrc}" 
+               alt="Option ${idx}" 
+               class="choice-img"
+               onclick="selectImageOption(this, '${imgSrc}')">
+        `;
+      });
+      inputHTML += `</div><input type="hidden" id="answerInput">`;
+      break;
+
+    case 'multiple_choice':
+      inputHTML = `<div id="mcq-options">`;
+      question.options.forEach(opt => {
+        inputHTML += `
+          <label>
+            <input type="radio" name="mcq" value="${opt}" onclick="document.getElementById('answerInput').value='${opt}'">
+            ${opt}
+          </label><br>`;
+      });
+      inputHTML += `<input type="hidden" id="answerInput">`;
+      break;
+
+    default:
+      inputHTML = `<input type="text" id="answerInput" class="answer-box" placeholder="Your answer here">`;
+      break;
+  }
+
+  // Add Submit Button
+  inputHTML += `<br><button onclick="submitAnswer()" class="submit-btn">Submit</button>`;
+  container.innerHTML += inputHTML;
+}
+function selectImageOption(element, value) {
+  document.getElementById('answerInput').value = value;
+
+  // Highlight selection
+  document.querySelectorAll(".choice-img").forEach(img => img.classList.remove('selected'));
+  element.classList.add('selected');
+}
+
+
+function submitImageAnswer(selectedImage, questionId) {
+  const user = JSON.parse(localStorage.getItem("user"));
+  const sessionId = localStorage.getItem("session_id");
+
+  const payload = {
+    user_id: user.id,
+    question_id: questionId,
+    answer: selectedImage,
+    time_taken: 3, // adjust with actual timer if used
+    test_session_id: sessionId
+  };
+
+  fetch("http://127.0.0.1:5000/submit_answer", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  })
+  .then(res => res.json())
+  .then(data => {
+    console.log("Answer submitted:", data);
+    loadNextQuestion(); // or however you're loading next one
+  });
+}

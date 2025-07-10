@@ -89,3 +89,47 @@ header {
   text-align: center;
   margin-top: 20px;
 }
+
+.choice-img {
+  width: 100px;
+  margin: 10px;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.choice-img:hover {
+  transform: scale(1.05);
+  border-color: #00f;
+}
+.answer-box {
+  padding: 10px;
+  font-size: 16px;
+  width: 300px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+.submit-btn {
+  background: linear-gradient(to right, #00c6ff, #0072ff);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  margin-top: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.choice-img {
+  width: 120px;
+  margin: 10px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  transition: 0.3s ease;
+}
+.choice-img:hover {
+  transform: scale(1.05);
+  border-color: #00aaff;
+}
+.choice-img.selected {
+  border-color: green;
+}

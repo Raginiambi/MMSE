@@ -61,22 +61,63 @@ def get_questions():
     questions = cursor.fetchall()
     cursor.close()
     conn.close()
+    import json
+    for q in questions:
+        if q.get("options_json"):
+            try:
+                q["options"] = json.loads(q["options_json"])
+            except:
+                q["options"] = []
+        else:
+            q["options"] = []
+
     return jsonify(questions)
+    
 
 from datetime import datetime
 
 from datetime import datetime
+
+@app.route('/get_question/<int:question_id>', methods=['GET'])
+def get_question(question_id):
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("""
+        SELECT id, question_text, answer_type, options_json
+        FROM mmse_questions
+        WHERE id = %s
+    """, (question_id,))
+    question = cursor.fetchone()
+    cursor.close()
+    conn.close()
+    
+    # Convert options_json to Python list
+    if question and question['options_json']:
+        import json
+        question['options'] = json.loads(question['options_json'])
+    else:
+        question['options'] = []
+
+    return jsonify(question)
+
+
+from datetime import datetime
+import os
 
 @app.route('/submit_answer', methods=['POST'])
 def submit_answer():
     data = request.json
-    user_answer = data['answer'].strip().lower()
+    user_answer_raw = data['answer']
+    user_answer = os.path.splitext(user_answer_raw.strip().lower())[0]  # remove ".png" if present
     score = 0
 
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
 
-    cursor.execute("SELECT question_text, correct_answer, max_score FROM mmse_questions WHERE id = %s", (data['question_id'],))
+    cursor.execute(
+        "SELECT question_text, correct_answer, max_score FROM mmse_questions WHERE id = %s",
+        (data['question_id'],)
+    )
     question = cursor.fetchone()
 
     if question:
@@ -85,51 +126,71 @@ def submit_answer():
         max_score = question['max_score']
         now = datetime.now()
 
-        # Time/Date-based questions
+        # ✅ Time/Date-based logic
         if "year" in qtext and user_answer == str(now.year):
             score = max_score
         elif "season" in qtext:
             month = now.month
-            season = "winter" if month in [12, 1, 2] else "spring" if month in [3, 4, 5] else "summer" if month in [6, 7, 8] else "autumn"
+            season = (
+                "winter" if month in [12, 1, 2,3] else
+                "monsoon" if month in [4,5,6,7] else
+                "summer" 
+            )
             if season in user_answer:
                 score = max_score
         elif "day of the week" in qtext:
             if user_answer == now.strftime("%A").lower():
                 score = max_score
         elif "date today" in qtext:
-            today = now.strftime("%d %B %Y").lower()
-            if user_answer in today or now.strftime("%d/%m/%Y").lower() in user_answer:
+            if user_answer in now.strftime("%d %B %Y").lower() or \
+               user_answer in now.strftime("%d/%m/%Y").lower():
                 score = max_score
+
+        # ✅ Location-related
         elif "place" in qtext or "city" in qtext or "state" in qtext:
-            if any(x in user_answer for x in ["india", "home", "sangli", "maharashtra"]):
+            if any(loc in user_answer for loc in ["india", "home", "sangli", "maharashtra"]):
                 score = max_score
+
+        # ✅ Subtract 7
         elif "subtract 7" in qtext:
             expected = ["93", "86", "79", "72", "65"]
-            user_numbers = [s.strip() for s in user_answer.split(',')]
+            user_numbers = [x.strip() for x in user_answer_raw.split(',')]
             correct_count = sum(1 for a, b in zip(user_numbers, expected) if a == b)
-            if correct_count >= 5:
-                score = max_score
-            elif correct_count >= 3:
-                score = int(max_score / 2)
+            score = max_score if correct_count == 5 else int(max_score * (correct_count / 5))
+
+        # ✅ 3-object registration / recall
         elif "3 objects" in qtext and "recall" in qtext:
             if all(x in user_answer for x in ["pencil", "apple", "chair"]):
                 score = max_score
         elif "3 objects" in qtext and "repeat" in qtext:
             if all(x in user_answer for x in ["pencil", "apple", "chair"]):
                 score = max_score
+
+        # ✅ Phrase repeat
         elif "no ifs, ands" in qtext:
-            if user_answer == "no ifs, ands, or buts.":
+            if user_answer == "no ifs, ands, or buts":
                 score = max_score
+
+        # ✅ Command: close eyes
         elif "close your eyes" in qtext:
             if "close" in user_answer or "done" in user_answer:
                 score = max_score
+
+        # ✅ Command: 3-stage
         elif "3-stage command" in qtext:
             if all(x in user_answer for x in ["paper", "fold", "floor"]):
                 score = max_score
+
+        # ✅ Name the object (image click like "pencil.png")
+        elif "name the object" in qtext:
+            if any(x in user_answer for x in ["pencil", "apple", "chair", "clock"]):
+                score = max_score
+
+        # ✅ Default fallback: match correct answer
         elif correct and user_answer == correct:
             score = max_score
 
-    # Store response
+    # ✅ Store the response
     cursor = conn.cursor()
     cursor.execute(
         "INSERT INTO mmse_responses (user_id, question_id, answer, time_taken_seconds, score_awarded) VALUES (%s, %s, %s, %s, %s)",
@@ -141,6 +202,7 @@ def submit_answer():
     conn.close()
 
     return jsonify({"message": "Answer submitted", "score_awarded": score})
+
 
 
 

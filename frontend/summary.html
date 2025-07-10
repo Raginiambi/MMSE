@@ -55,8 +55,18 @@
         console.error(err);
       });
 
-      // const btn = document.getElementById("home");
-      // btn.onclick(window.location.href = "profile.html");
+      const btn = document.getElementById("home");
+      btn.addEventListener("click",()=>{
+        const user = JSON.parse(localStorage.getItem("user"));
+
+        if(!user){
+          window.location.href = "login.html";
+        }else if(user.role == "main_host"){
+          window.location.href = "admin_dashboard.html";
+        }else{
+          window.location.href = "profile.html";
+        }
+      })
   </script>
 </body>
 </html>

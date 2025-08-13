@@ -52,3 +52,7 @@ header{
 .submit-btn:hover{
     background-color: #e3e9d1;
 }
+.choice-img{
+    height:20vh;
+    width:20vh;
+}

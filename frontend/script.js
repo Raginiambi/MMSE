@@ -147,7 +147,7 @@ function loadScoreHistory() {
 
 function renderQuestion(question) {
   const container = document.getElementById('question-area');
-  container.innerHTML = `<h3><strong>Q${question.id}:</strong> ${question.question_text}</h3>`;
+  container.innerHTML = `<h3 id="question-text">Q${question.id}: ${question.question_text}</h3>`;
 
   // Clear previous answer input
   let inputHTML = '';
@@ -155,7 +155,7 @@ function renderQuestion(question) {
   // Handle types
   switch (question.answer_type) {
     case 'calendar':
-      inputHTML = `<input type="date" id="answerInput" class="answer-box">`;
+      inputHTML = `<input type="date" id="answerInput" class="answer-box" >`;
       break;
 
     case 'image_choice':

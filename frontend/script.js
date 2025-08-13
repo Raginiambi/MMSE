@@ -145,7 +145,7 @@ function loadScoreHistory() {
 }
 
 
-function renderQuestion(question) {
+function (question) {
   const container = document.getElementById('question-area');
   container.innerHTML = `<h3><strong>Q${question.id}:</strong> ${question.question_text}</h3>`;
 

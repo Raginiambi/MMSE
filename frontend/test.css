@@ -52,7 +52,14 @@ header{
 .submit-btn:hover{
     background-color: #e3e9d1;
 }
+#image-options{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2vh;
+}
 .choice-img{
     height:20vh;
     width:20vh;
+    border-radius: 2vh;
 }

@@ -16,10 +16,10 @@ body {
 /* Card Layout */
 .card {
   background: #fff;
-  border-radius: 15px;
+  border-radius: 25px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-  padding: 25px;
-  margin: 20px auto;
+  padding: 35px;
+  margin: 30px auto;
   max-width: 400px;
 }
 
@@ -33,11 +33,15 @@ button {
   cursor: pointer;
   font-weight: bold;
   transition: 0.3s ease;
+  width: 70%;
+  display: block;         /* makes centering possible */
+  margin: 20px auto 0;    /* 20px gap above, auto centers horizontally */
 }
 
 button:hover {
   background: linear-gradient(to right, #0072ff, #00c6ff);
 }
+
 
 /* Input Fields */
 input, select {
@@ -53,6 +57,7 @@ input, select {
 h1, h2 {
   color: #0072ff;
   margin-bottom: 15px;
+  text-align: center;
 }
 
 /* Navigation or Header */

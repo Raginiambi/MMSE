@@ -1,0 +1,39 @@
+*{
+    margin:0px;
+    padding: 0px;
+}
+
+body{
+    background-color: wheat;
+}
+header{
+    text-align: center;
+    background-color: #1C6EA4;
+    height: 7vh;
+    line-height: 7vh;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 4vh;
+    color:rgb(236, 222, 222);
+}
+.card{
+  display: flex;
+  justify-content:center ;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 5vh;
+  background-color: #33A1E0;
+  width: 50vh;
+  margin-left: 76vh;
+  margin-top: 14vh;
+  gap:3vh ;
+  padding: 4vh;
+border-radius: 3vh;
+
+}
+#profile-title{
+    color: whitesmoke;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+#profile{
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}

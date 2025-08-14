@@ -1,70 +1,94 @@
-*{
-    padding: 0%;
-    margin: 0%;
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-body{
-    background-color: #b9f9efde;
+/* Body styling */
+body {
+    background-color: #F4F9F9; /* Soft clean white-blue */
     text-align: center;
-}
-header {
-    text-align: center;
-    height: 8vh;
-    line-height: 8vh;
-    background-color: #ffcccced;
     font-family: 'Quicksand', sans-serif;
-    font-size: 3.9vh;
-    color: #33034f;
-
-    /* Strong separated shadow effect */
-    text-shadow: 1.7px 1.5px 0px #bae8fb;
-    border-bottom: 3.3px solid #3d055d;
 }
 
-#question-area{
-    display:inline-flex;
+/* Header */
+header {
+  text-align: center;
+  height: 8vh;
+  line-height: 8vh;
+  background-color: #0ec7d8;
+  font-family: 'Quicksand', sans-serif; /* special font stays */
+  font-size: 3.5vh;
+  color: #ffffff;
+  text-shadow: 2px 4px 6px rgba(4, 26, 113, 0.5);
+  border-bottom: 0.6vh ridge #8bddd6;
+}
+
+/* Question area box */
+#question-area {
+    display: inline-flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
-    background-color: #D6DAC8;
-    text-align: center;
+    background-color: #ffffff;
     margin-top: 9vh;
-    gap:2vh;
+    gap: 2vh;
     padding: 3vh;
     border-radius: 2vh;
-    border: 1.1cap ridge #D6DAC8;
-    
+    border: 0.56cap ridge #B2DFDB;
+    box-shadow: 0 0.8vh 2vh rgba(0, 0, 0, 0.08);
+}
 
+/* Question text */
+#question-text {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 2.3vh;
+    color: #3E4A89;
 }
-.answer-box{
-    height:3vh;
+
+/* Input box for answers */
+.answer-box {
+    height: 3vh;
     border-radius: 1.3vh;
-    width:auto;
     padding: 1vh;
-    
+    border: 1px solid #B0BEC5;
+    background-color: #FAFAFA;
 }
-#question-text{
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-}
-.submit-btn{
-    height:4.5vh;
+
+/* Submit button */
+.submit-btn {
+    height: 4.5vh;
     width: 11vh;
-    background-color: #FBF3D5;
+    background-color: #4DB6AC;
+    color: white;
     font-size: 2.1vh;
     border-radius: 1.2vh;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    border: none;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
 }
-.submit-btn:hover{
-    background-color: #e3e9d1;
+
+.submit-btn:hover {
+    background-color: #00c5c2;
 }
-#image-options{
+
+/* Image choices */
+#image-options {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 2vh;
 }
-.choice-img{
-    height:20vh;
-    width:20vh;
+
+.choice-img {
+    height: 20vh;
+    width: 20vh;
     border-radius: 2vh;
+    border: 0.3vh solid #B2DFDB;
+    transition: transform 0.2s ease;
+}
+
+.choice-img:hover {
+    transform: scale(1.03);
 }

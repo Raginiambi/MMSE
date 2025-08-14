@@ -3,138 +3,120 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Segoe UI', sans-serif;
 }
 
-/* General Layout */
 body {
-  background: #f2f8fb;
-  color: #222;
-  padding: 20px;
+  background-color: #F4F9F9;
+  font-family: 'Quicksand', sans-serif;
 }
 
-/* Card Layout */
-.card {
-  background: #fff;
-  border-radius: 25px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-  padding: 35px;
-  margin: 30px auto;
-  max-width: 400px;
-}
+/* Header - same for both */
 
-/* Buttons */
-button {
-  background: linear-gradient(to right, #00c6ff, #0072ff);
-  color: white;
-  border: none;
-  padding: 12px 25px;
-  border-radius: 25px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: 0.3s ease;
-  width: 70%;
-  display: block;         /* makes centering possible */
-  margin: 20px auto 0;    /* 20px gap above, auto centers horizontally */
-}
-
-button:hover {
-  background: linear-gradient(to right, #0072ff, #00c6ff);
-}
-
-
-/* Input Fields */
-input, select {
-  width: 100%;
-  padding: 12px;
-  margin: 12px 0;
-  border: 1px solid #ccc;
-  border-radius: 12px;
-  font-size: 1em;
-}
-
-/* Profile & Form Titles */
-h1, h2 {
-  color: #0072ff;
-  margin-bottom: 15px;
-  text-align: center;
-}
-
-/* Navigation or Header */
 header {
   text-align: center;
-  padding: 10px;
-  background: #00c6ff;
-  color: white;
-  font-size: 1.2em;
-  border-radius: 0 0 20px 20px;
+  height: 8vh;
+  line-height: 8vh;
+  background-color: #0ec7d8;
+  font-family: 'Quicksand', sans-serif; /* special font stays */
+  font-size: 3.5vh;
+  color: #ffffff;
+  text-shadow: 2px 4px 6px rgba(3, 18, 80, 0.5);
+  border-bottom: 0.6vh ridge #8bddd6;
 }
 
-/* Profile Box */
-.profile {
-  background: #e6f7ff;
-  border-radius: 15px;
-  padding: 15px;
-  margin-top: 15px;
+
+/* Container - center card for both */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Optional for perfect vertical centering */
+  margin-top: 5vh;
+  width: 100%;
 }
 
-/* Question Box */
-#question-box {
+/* Card - shared style */
+.card {
   background: #ffffff;
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0 4px 15px rgba(0, 114, 255, 0.1);
-}
-
-/* Calendar-like Placeholder */
-.calendar-box {
-  background: #f0fbff;
-  padding: 20px;
-  border-radius: 12px;
+  border-radius: 2vh;
+  border: 0.6vh ridge #B2DFDB;
+  padding: 3vh 3vw;
+  max-width: 405px; /* Increased from 350px */
+  width: 100%; /* Ensure it adapts */
   text-align: center;
-  margin-top: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
 }
 
-.choice-img {
-  width: 100px;
-  margin: 10px;
-  border: 2px solid transparent;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: 0.3s;
+
+.card h1 {
+  font-family: Arial, Helvetica, sans-serif; /* normal heading font */
+  font-size: 3.4vh;
+  margin-bottom: 2vh;
+  color: #3E4A89;
+  text-shadow: 1px 2px 3px rgba(3, 18, 80, 0.3);
 }
-.choice-img:hover {
-  transform: scale(1.05);
-  border-color: #00f;
+
+/* For Login & Register cards only */
+.card input,
+.card select {
+  width: 100%;
+  padding: 1.2vh;
+  margin: 0.8vh 0;
+  border: 1px solid #B0BEC5;
+  border-radius: 1.3vh;
+  background-color: #FAFAFA;
+  font-size: 2vh;
 }
-.answer-box {
-  padding: 10px;
-  font-size: 16px;
-  width: 300px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+
+/* Normal focus */
+.card input:focus,
+.card select:focus {
+  outline: none;
+  border: 1.4px solid #00c5c2; /* same as heading */
+  box-shadow: none;
 }
-.submit-btn {
-  background: linear-gradient(to right, #00c6ff, #0072ff);
+
+/* Autofill styles for Chrome (Login & Register only) */
+.card input:-webkit-autofill,
+.card input:-webkit-autofill:focus,
+.card input:-webkit-autofill:hover {
+  border: 1.4px solid #00c5c2 !important; /* same as heading */
+  -webkit-box-shadow: 0 0 0px 1000px #FAFAFA inset !important;
+  box-shadow: 0 0 0px 1000px #FAFAFA inset !important;
+  -webkit-text-fill-color: black !important;
+}
+
+
+/* Button - same look for Register & Login */
+.btn {
+  background-color: #4DB6AC;
   color: white;
-  padding: 10px 20px;
+  font-size: 2vh;
+  font-style: bold;
+  border-radius: 1.2vh;
   border: none;
-  margin-top: 10px;
-  border-radius: 8px;
+  padding: 1vh 0;
+  margin-top: 2vh;
+  width: 40%;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #00c5c2;
   cursor: pointer;
 }
-.choice-img {
-  width: 120px;
-  margin: 10px;
-  cursor: pointer;
-  border: 2px solid transparent;
-  border-radius: 8px;
-  transition: 0.3s ease;
+
+/* Text links */
+.text-link {
+  margin-top: 2vh;
+  font-size: 1.8vh;
+  color: #3E4A89;
 }
-.choice-img:hover {
-  transform: scale(1.05);
-  border-color: #00aaff;
+
+.text-link a {
+  color: #0ec7d8;
+  text-decoration: none;
 }
-.choice-img.selected {
-  border-color: green;
+
+.text-link a:hover {
+  text-decoration: underline;
 }

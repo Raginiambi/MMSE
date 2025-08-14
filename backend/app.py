@@ -279,8 +279,8 @@ def get_user_tests(user_id):
     return jsonify(sessions)
 
 
-@app.route('/admin/test_details/<int:session_id>', methods=['GET'])
-def get_test_details(session_id):
+@app.route('/admin/test_details/<int:user_id>/<string:date>', methods=['GET'])
+def get_test_details(user_id, date):
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
     cursor.execute("""
@@ -294,7 +294,7 @@ def get_test_details(session_id):
         JOIN mmse_questions q ON r.question_id = q.id
         WHERE r.user_id = %s AND DATE(r.submitted_at) = %s
         ORDER BY r.submitted_at ASC
-    """, (user_id,date))
+    """, (user_id, date))
     details = cursor.fetchall()
     cursor.close()
     conn.close()

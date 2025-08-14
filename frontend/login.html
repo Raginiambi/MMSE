@@ -2,26 +2,29 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
+  <title>Login - MMSE Test Portal</title>
   <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@600&family=Playfair+Display:wght@700&family=Quicksand:wght@600&family=Raleway:wght@600&family=Source+Sans+Pro:wght@500&display=swap" rel="stylesheet">
+  <script src="script.js" defer></script>
 </head>
 <body>
 
-  <div class="login-container">
-    <div class="card">
+  <header>MMSE Cognitive Test</header>
+
+  <div class="container">
+    <div class="card" id="login-card">
       <h1>Login</h1>
-      <form onsubmit="login(); return false;">
-        <input type="email" id="email" placeholder="Email" required>
-        <input type="password" id="password" placeholder="Password" required>
-        <button type="submit">Login</button>
-      </form>
-      <p class="register-text">
-        Don't have an account? <a href="register.html">Register</a>
-      </p>
+
+      <!-- IDs added as per script.js -->
+      <input id="email" type="email" placeholder="Email Address" required>
+      <input id="password" type="password" placeholder="Password" required>
+
+      <!-- Button runs login() from script.js -->
+      <button class="btn" type="button" onclick="login()">Login</button>
+      
+      <p class="text-link">Don't have an account? <a href="register.html">Register</a></p>
     </div>
   </div>
 
-  <script src="script.js"></script>
 </body>
 </html>

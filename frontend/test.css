@@ -4,16 +4,21 @@
 }
 
 body{
-    background-color: #FBF3D5;
+    background-color: #b9f9efde;
     text-align: center;
 }
-header{
+header {
     text-align: center;
-    height:6vh;
-    line-height: 6vh;
-    background-color: #D6A99D;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-size: 3vh;
+    height: 8vh;
+    line-height: 8vh;
+    background-color: #ffcccced;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 3.9vh;
+    color: #33034f;
+
+    /* Strong separated shadow effect */
+    text-shadow: 1.7px 1.5px 0px #bae8fb;
+    border-bottom: 3.3px solid #3d055d;
 }
 
 #question-area{

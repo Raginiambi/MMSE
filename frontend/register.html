@@ -4,29 +4,37 @@
   <meta charset="UTF-8">
   <title>Register - MMSE Test Portal</title>
   <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@600&family=Playfair+Display:wght@700&family=Quicksand:wght@600&family=Raleway:wght@600&family=Source+Sans+Pro:wght@500&display=swap" rel="stylesheet">
+  <script src="script.js" defer></script>
 </head>
 <body>
 
-  <div class="card">
-    <h1>Create Account</h1>
+  <header>MMSE Cognitive Test</header>
 
-    <input type="text" id="name" placeholder="Full Name" required>
-    <input type="email" id="email" placeholder="Email Address" required>
-    <input type="password" id="password" placeholder="Password" required>
-    <input type="number" id="age" placeholder="Age" required>
-    <input type="text" id="location" placeholder="Location" required>
+  <div class="container">
+    <div class="card" id="register-card">
+      <h1>Create Account</h1>
 
-    <select id="gender" required>
-      <option value="">Select Gender</option>
-      <option value="Male">Male</option>
-      <option value="Female">Female</option>
-      <option value="Other">Other</option>
-    </select>
+      <!-- IDs for JS -->
+      <input id="fullName" type="text" placeholder="Full Name" required>
+      <input id="email" type="email" placeholder="Email Address" required>
+      <input id="password" type="password" placeholder="Password" required>
+      <input id="age" type="number" placeholder="Age" required>
+      <input id="location" type="text" placeholder="Location" required>
 
-    <button onclick="register()">Register</button>
-    <p>Already have an account? <a href="login.html">Login</a></p>
+      <select id="gender" required>
+        <option value="">Select Gender</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+      </select>
+
+      <!-- Call register() function -->
+      <button class="btn" type="button" onclick="register()">Register</button>
+      
+      <p class="text-link">Already have an account? <a href="login.html">Login</a></p>
+    </div>
   </div>
 
-  <script src="script.js"></script>
 </body>
 </html>

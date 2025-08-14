@@ -3,42 +3,79 @@
 <head>
   <title>MMSE Score Summary</title>
   <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Body styling */
     body {
-      font-family: Arial;
-      background-color: #f5faff;
+      background-color: #F4F9F9;
       text-align: center;
-      padding-top: 50px;
+      height: 80vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
+
+    /* Container */
+    .result-container {
+      background-color: #FAFAFA;
+      padding: 4vh 5vh;
+      border-radius: 2vh;
+      box-shadow: 0 0.8vh 2vh rgba(0, 0, 0, 0.08);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3vh;
+      min-width: 45vh;
+    }
+
     h1 {
-      color: #0077cc;
+      color: #39cfc5;
+      font-size: 3.6vh;
+      text-shadow: 1px 2px 4px rgba(3, 18, 80, 0.2);
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
     }
+
     #score-box {
-      font-size: 1.8rem;
+      font-size: 3vh; /* Same as h1 */
       font-weight: bold;
-      margin-top: 20px;
+      font-family: 'Quicksand', sans-serif;
+      color: rgba(2, 27, 126, 0.922);
     }
-    #home{
-      margin-top: 10vh;
-      height:4.5vh;
-      width:15vh;
-      background-color: #49a1df;
-      color:#f5faff;
-      border: 0cap;
-      box-shadow: #007;
-      border-radius: 1.4vh;
+
+    #home {
+      height: 4.5vh;
+      width: 15vh;
+      background-color: #45d2c4;
+      color: white;
+      font-size: 2.2vh;
+      border-radius: 1.2vh;
+      border: none;
+      transition: background-color 0.3s ease;
+      cursor: pointer;
+    }
+
+    #home:hover {
+      background-color: #00c5c2;
     }
   </style>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@600&family=Playfair+Display:wght@700&family=Quicksand:wght@600&family=Raleway:wght@600&family=Source+Sans+Pro:wght@500&display=swap" rel="stylesheet">
 </head>
 <body>
-  <h1>MMSE Test Result</h1>
-  <div id="score-box">Loading score...</div>
-  <button id="home">Go to Home </button>
+  <div class="result-container">
+    <h1>MMSE Test Result</h1>
+    <div id="score-box">Loading score...</div>
+    <button id="home">Go to Home</button>
+  </div>
 
   <script>
     const BASE_URL = 'http://127.0.0.1:5000';
     const user = JSON.parse(localStorage.getItem("user"));
     if (!user) window.location.href = "login.html";
-    
 
     fetch(`${BASE_URL}/total_score/${user.id}`)
       .then(res => res.json())
@@ -48,25 +85,21 @@
         document.getElementById("score-box").textContent =
           `You scored ${score} out of ${total}`;
       })
-      
-     
       .catch(err => {
         document.getElementById("score-box").textContent = "Unable to load score.";
         console.error(err);
       });
 
-      const btn = document.getElementById("home");
-      btn.addEventListener("click",()=>{
-        const user = JSON.parse(localStorage.getItem("user"));
-
-        if(!user){
-          window.location.href = "login.html";
-        }else if(user.role == "main_host"){
-          window.location.href = "admin_dashboard.html";
-        }else{
-          window.location.href = "profile.html";
-        }
-      })
+    document.getElementById("home").addEventListener("click", () => {
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (!user) {
+        window.location.href = "login.html";
+      } else if (user.role == "main_host") {
+        window.location.href = "admin_dashboard.html";
+      } else {
+        window.location.href = "profile.html";
+      }
+    });
   </script>
 </body>
 </html>
